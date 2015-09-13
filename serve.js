@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 //
 // This script will run a local development server. This is useful when
 // developing the theme.
@@ -14,6 +14,12 @@ var args = require('optimist').argv;
 
 var port = 8888;
 http.createServer(function(req, res) {
+    if (req.url == "/photo.png") {
+        var img = fs.readFileSync('./photo.png');
+        res.writeHead(200, {'Content-Type': 'image/png' });
+        res.end(img, 'binary');
+        return;
+    }
     res.writeHead(200, {
         "Content-Type": "text/html"
     });

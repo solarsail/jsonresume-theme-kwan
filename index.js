@@ -21,14 +21,16 @@ function humanizeDuration ( moment_obj, did_leave_company ) {
     var days,
         months = moment_obj.months(),
         years = moment_obj.years(),
-        month_str = months > 1 ? 'months' : 'month',
-        year_str = years > 1 ? 'years' : 'year';
+        month_str = '个月',
+        year_str = '年';
 
     if ( months && years ) {
         return years + ' ' + year_str + ' ' + months + ' ' + month_str;
     }
 
     if ( months ) {
+        if (moment_obj.days() > 15)
+            months += 1;
         return months + ' ' + month_str;
     }
 
@@ -38,10 +40,9 @@ function humanizeDuration ( moment_obj, did_leave_company ) {
 
     if ( did_leave_company ) {
         days = moment_obj.days();
-
-        return ( days > 1 ? days + ' days' : days + ' day' );
+        return days + ' 天';
     } else {
-        return 'Recently joined';
+        return '最近加入';
     }
 }
 
@@ -90,7 +91,7 @@ function render(resume) {
                         "codepen", "foursquare", "reddit", "spotify",
                         "dribble", "dribbble", "facebook", "angellist",
                         "bitbucket", "skype"],
-        date_format = 'MMM YYYY';
+        date_format = 'YYYY/MM';
 
     if (!resume.basics.picture && hasEmail(resume)) {
         resume.basics.picture = gravatar.url(resume.basics.email.replace('(at)', '@'), {
@@ -128,12 +129,14 @@ function render(resume) {
 
     _.each( resume.skills, function( skill_info ) {
         var levels = [ 'Beginner', 'Intermediate', 'Advanced', 'Master' ];
+        var disp = [ '了解', '熟悉', '熟练', '精通' ];
 
         if ( skill_info.level ) {
             skill_info.skill_class = skill_info.level.toLowerCase();
             skill_info.level = _s.capitalize( skill_info.level.trim() );
             skill_info.display_progress_bar = _.contains( levels,
                                                           skill_info.level );
+            skill_info.disp = disp[_.indexOf( levels, skill_info.level )];
         }
     });
 
@@ -167,7 +170,7 @@ function render(resume) {
 
     _.each( resume.publications, function( publication_info ) {
         if ( publication_info.releaseDate ) {
-            publication_info.releaseDate = moment( new Date( publication_info.releaseDate ) ).format( 'MMM DD, YYYY' )
+            publication_info.releaseDate = moment( new Date( publication_info.releaseDate ) ).format( 'YYYY/MM/DD' )
         }
     });
 

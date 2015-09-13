@@ -37,7 +37,8 @@
   }
 }
 body {
-  font-family: 'Lato', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /*font-family: 'Lato', "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+  font-family: 'Lato', 'AR PL SungtiL GB', "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: #f0f0f0;
   color: #333333;
   font-size: 16px;
@@ -94,10 +95,11 @@ body {
 }
 .profile-pic img {
   width: 100px;
-  height: 100px;
+  /*height: 100px;*/
 }
 .contact-details {
   display: table-cell;
+  vertical-align: middle;
 }
 .contact-details .detail {
   display: inline-block;
@@ -351,17 +353,17 @@ h4 > .fa {
   }
   .skill.beginner {
     height: 50%;
-    border-color: #e74c3c;
+    border-color: #7FABCA;/*#e74c3c*/
   }
   .skill.intermediate {
     height: 70%;
-    border-color: #f1c40f;
+    border-color: #3E82B2;/*#f1c40f*/
   }
   .skill.advanced {
-    border-color: #5cb85c;
+    border-color: #065389;/*#5cb85c*/
   }
   .skill.master {
-    border-color: black;
+    border-color: #033E68;/*black*/
   }
 }
 @media (max-width: 768px) {
