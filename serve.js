@@ -11,19 +11,40 @@ var http = require("http");
 var theme = require("./index.js");
 var fs = require('fs');
 var args = require('optimist').argv;
+var url = require('url');
+var path = require('path');
 
 var port = 8888;
 http.createServer(function(req, res) {
-    if (req.url == "/photo.png") {
-        var img = fs.readFileSync('./photo.png');
-        res.writeHead(200, {'Content-Type': 'image/png' });
-        res.end(img, 'binary');
+    var request = url.parse(req.url, true);
+    var action = request.pathname;
+    if (action === "/") {
+        res.writeHead(200, {
+            "Content-Type": "text/html"
+        });
+        res.end(render());
         return;
     }
-    res.writeHead(200, {
-        "Content-Type": "text/html"
+    var filePath = path.join(__dirname, action);
+    fs.exists(filePath, function (exists) {
+        if (!exists) {
+            res.writeHead(404, {'Content-Type': 'text/plain' });
+            res.end('404 Not Found');
+            return;
+        }
+        var ext = path.extname(filePath);
+        var contentType = 'text/plain';
+        if (ext === ".png") {
+            var contentType = 'image/png';
+        }
+        if (ext === ".jpg") {
+            var contentType = 'image/jpg';
+        }
+        var img = fs.readFileSync(filePath);
+        res.writeHead(200, {'Content-Type': contentType });
+        res.end(img, 'binary');
+        return;
     });
-    res.end(render());
 }).listen(port);
 
 console.log("Preview: http://localhost:8888/");
