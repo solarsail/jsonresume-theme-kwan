@@ -393,11 +393,9 @@ content: "。";
         .pagebreak {
             page-break-before: always;
         }
-        /*
         .background-card h4:not(:first-child) {
-            margin-top: 0 !important;
+            margin-top: 0.5em !important;
         }
-        */
         .card {
             border: 0;
             padding: 0;
